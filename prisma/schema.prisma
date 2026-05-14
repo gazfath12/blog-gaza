@@ -32,6 +32,7 @@ model Post {
   tags          String[]
   views         Int       @default(0)
   readingTime   String?
+  metaDescription String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
