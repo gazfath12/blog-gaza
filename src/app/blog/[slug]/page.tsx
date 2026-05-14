@@ -6,6 +6,36 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { ArrowLeft, Share2, Twitter, Linkedin, Link as LinkIcon, Calendar, Clock, Tag } from "lucide-react";
 import Link from "next/link";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await prisma.post.findUnique({ where: { slug } });
+
+  if (!post) return { title: "Post Not Found" };
+
+  return {
+    title: post.title,
+    description: post.excerpt || "Article by Gaza Alfath",
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || "Article by Gaza Alfath",
+      type: "article",
+      publishedTime: post.createdAt.toISOString(),
+      authors: ["Gaza Alfath"],
+      images: post.thumbnail ? [post.thumbnail] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt || "Article by Gaza Alfath",
+      images: post.thumbnail ? [post.thumbnail] : [],
+    },
+  };
+}
 
 export default async function BlogPostPage({
   params,
@@ -36,8 +66,27 @@ export default async function BlogPostPage({
     take: 2,
   });
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": post.thumbnail,
+    "datePublished": post.createdAt.toISOString(),
+    "dateModified": post.updatedAt.toISOString(),
+    "author": {
+      "@type": "Person",
+      "name": "Gaza Alfath",
+      "url": "https://gazaalfath.my.id/about"
+    }
+  };
+
   return (
     <article className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 max-w-4xl">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/blog"
         className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-12 transition-colors"

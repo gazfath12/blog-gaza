@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gazaalfath.my.id"),
   title: {
     default: "Gaza Alfath | Software Engineer & Tech Writer",
     template: "%s | Gaza Alfath",
