@@ -1,65 +1,120 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Code, Cpu, Database, Layout, Briefcase, Zap } from "lucide-react";
+import prisma from "@/lib/prisma";
+import { formatDate } from "@/lib/utils";
 
-export default function Home() {
+const categories = [
+  { name: "Coding", icon: Code, href: "/blog?category=Coding" },
+  { name: "AI", icon: Cpu, href: "/blog?category=AI" },
+  { name: "Backend", icon: Database, href: "/blog?category=Backend" },
+  { name: "Frontend", icon: Layout, href: "/blog?category=Frontend" },
+  { name: "Career", icon: Briefcase, href: "/blog?category=Career" },
+  { name: "Tech", icon: Zap, href: "/blog?category=Tech" },
+];
+
+export default async function Home() {
+  const latestPosts = await prisma.post.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+    take: 3,
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex flex-col space-y-24 pb-24">
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 pt-24 text-center sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center space-y-8">
+          <div className="inline-flex items-center rounded-full border bg-muted px-3 py-1 text-sm font-medium">
+            <span className="relative flex h-2 w-2 mr-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            Available for new opportunities
+          </div>
+          
+          <h1 className="max-w-4xl text-5xl font-extrabold tracking-tight sm:text-7xl">
+            Gaza Alfath
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          
+          <p className="max-w-2xl text-xl font-medium text-muted-foreground sm:text-2xl">
+            Software Engineer • Fullstack Developer • Tech Writer
           </p>
+          
+          <p className="max-w-2xl text-lg text-muted-foreground">
+            Building robust web applications and sharing insights on AI, modern architecture, and developer career growth.
+          </p>
+
+          <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+            <Link
+              href="/blog"
+              className="inline-flex h-12 items-center justify-center rounded-md bg-foreground px-8 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+            >
+              Read Articles
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex h-12 items-center justify-center rounded-md border bg-background px-8 text-sm font-medium transition-colors hover:bg-accent"
+            >
+              Contact Me
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Categories Section */}
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {categories.map((cat) => (
+            <Link
+              key={cat.name}
+              href={cat.href}
+              className="flex flex-col items-center justify-center space-y-3 rounded-xl border bg-card p-6 transition-all hover:border-primary hover:shadow-lg"
+            >
+              <cat.icon className="h-6 w-6 text-primary" />
+              <span className="text-sm font-semibold">{cat.name}</span>
+            </Link>
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* Latest Articles */}
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between mb-12">
+          <h2 className="text-3xl font-bold tracking-tight">Latest Articles</h2>
+          <Link href="/blog" className="text-sm font-medium text-primary hover:underline flex items-center">
+            View all posts <ArrowRight className="ml-1 h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {latestPosts.map((post) => (
+            <article key={post.id} className="group flex flex-col space-y-4 rounded-2xl border bg-card p-6 transition-all hover:shadow-xl">
+              <div className="flex items-center space-x-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <span>{post.category}</span>
+                <span>•</span>
+                <span>{post.readingTime}</span>
+              </div>
+              
+              <Link href={`/blog/${post.slug}`} className="flex flex-col space-y-2">
+                <h3 className="text-2xl font-bold leading-snug transition-colors group-hover:text-primary">
+                  {post.title}
+                </h3>
+                <p className="line-clamp-2 text-muted-foreground">
+                  {post.excerpt}
+                </p>
+              </Link>
+              
+              <div className="mt-auto pt-4 flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">{formatDate(post.createdAt)}</span>
+                <Link href={`/blog/${post.slug}`} className="font-semibold text-primary inline-flex items-center">
+                  Read more <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
