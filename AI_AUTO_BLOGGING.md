@@ -23,7 +23,7 @@ Untuk mengaktifkan otomasi, ikuti langkah berikut:
         *   `ADMIN_API_KEY`: (Isi dengan password acak yang sama dengan di `.env`)
         *   `DATABASE_URL`: (Sudah ada dari Neon)
 3.  **Update Site URL**:
-    *   Di file `.github/workflows/auto-blog.yml`, pastikan `SITE_URL` mengarah ke domain produksi Anda (misal: `https://gazaalfath.my.id`).
+    *   Di file `.github/workflows/auto-blog.yml`, pastikan `SITE_URL` mengarah ke domain produksi Anda (misal: `https://blog.gazaalfath.my.id`).
 
 ## 📝 Konfigurasi Tambahan
 *   **Waktu Eksekusi**: Ubah nilai `cron` di `.github/workflows/auto-blog.yml` jika ingin mengubah jadwal (misal: setiap 24 jam).

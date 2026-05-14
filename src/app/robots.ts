@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/admin/",
     },
-    sitemap: "https://gazaalfath.my.id/sitemap.xml",
+    sitemap: "https://blog.gazaalfath.my.id/sitemap.xml",
   };
 }

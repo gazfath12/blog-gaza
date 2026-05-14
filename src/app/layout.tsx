@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gazaalfath.my.id"),
+  metadataBase: new URL("https://blog.gazaalfath.my.id"),
   title: {
     default: "Gaza Alfath | Software Engineer & Tech Writer",
     template: "%s | Gaza Alfath",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://gazaalfath.my.id",
+    url: "https://blog.gazaalfath.my.id",
     siteName: "Gaza Alfath Blog",
     title: "Gaza Alfath | Software Engineer",
     description: "Personal blog of Gaza Alfath.",

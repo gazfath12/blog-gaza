@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     blogEntries = posts.map((post) => ({
-      url: `https://gazaalfath.my.id/blog/${post.slug}`,
+      url: `https://blog.gazaalfath.my.id/blog/${post.slug}`,
       lastModified: post.updatedAt,
     }));
   } catch (error) {
@@ -20,19 +20,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
-      url: "https://gazaalfath.my.id",
+      url: "https://blog.gazaalfath.my.id",
       lastModified: new Date(),
     },
     {
-      url: "https://gazaalfath.my.id/blog",
+      url: "https://blog.gazaalfath.my.id/blog",
       lastModified: new Date(),
     },
     {
-      url: "https://gazaalfath.my.id/about",
+      url: "https://blog.gazaalfath.my.id/about",
       lastModified: new Date(),
     },
     {
-      url: "https://gazaalfath.my.id/contact",
+      url: "https://blog.gazaalfath.my.id/contact",
       lastModified: new Date(),
     },
     ...blogEntries,

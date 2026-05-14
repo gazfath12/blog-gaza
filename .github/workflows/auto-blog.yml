@@ -25,5 +25,5 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
-          SITE_URL: "https://gazaalfath.my.id" # Update to your production URL
+          SITE_URL: "https://blog.gazaalfath.my.id" # Update to your production URL
         run: node scripts/auto-blog.js
