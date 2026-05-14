@@ -1,3 +1,4 @@
+require('dotenv').config();
 const axios = require('axios');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const slugify = require('slugify');
@@ -37,7 +38,7 @@ async function fetchTrendingTopics() {
 
 async function generateArticle(topics) {
     console.log("Generating article with Gemini...");
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `
     You are an expert technical writer and software engineer. 
