@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { NextResponse } from "next/server";
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
@@ -6,7 +7,7 @@ export default auth((req) => {
   const isOnLogin = req.nextUrl.pathname.startsWith("/admin/login");
 
   if (isOnAdmin && !isOnLogin && !isLoggedIn) {
-    return Response.redirect(new URL("/admin/login", req.nextUrl));
+    return NextResponse.redirect(new URL("/admin/login", req.nextUrl));
   }
 });
 
