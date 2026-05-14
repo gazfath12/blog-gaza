@@ -1,17 +1,17 @@
 require('dotenv').config();
 const axios = require('axios');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const Groq = require('groq-sdk');
 const slugify = require('slugify');
 
 // Configuration
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const ADMIN_API_KEY = process.env.ADMIN_API_KEY; // For securing the internal API
-const SITE_URL = process.env.SITE_URL || 'http://localhost:3000';
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const ADMIN_API_KEY = process.env.ADMIN_API_KEY;
+const SITE_URL = process.env.SITE_URL || 'https://blog.gazaalfath.my.id';
 
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const groq = new Groq({ apiKey: GROQ_API_KEY });
 
 async function fetchTrendingTopics() {
-    console.log("Fetching trending topics...");
+    console.log("Fetching trending topics from HN and Dev.to...");
     const topics = [];
 
     try {
@@ -37,60 +37,49 @@ async function fetchTrendingTopics() {
 }
 
 async function generateArticle(topics) {
-    console.log("Generating article with Gemini...");
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    console.log("Generating high-quality article with Groq (Llama 3)...");
 
     const prompt = `
-    You are an expert technical writer and software engineer. 
-    Based on these trending topics in the developer community:
+    You are an expert technical writer and senior software engineer.
+    Based on these trending topics:
     ${JSON.stringify(topics)}
 
-    Pick ONE of the most interesting and relevant topics (AI, Coding, Next.js, React, Fullstack, Backend, or Dev Tools) and write a comprehensive, original, and SEO-optimized blog post.
+    Pick ONE most relevant topic for a developer blog and write a professional, original article.
 
     REQUIREMENTS:
     - Language: English
     - Length: At least 1200 words.
-    - Style: Professional, modern developer style (like Vercel or Medium).
+    - Style: Like Vercel or Medium blog.
     - Format: Markdown.
-    - Structure:
-        - Catchy Title
-        - SEO Meta Description (150-160 characters)
-        - Short Excerpt
-        - Introduction
-        - Detailed Body with multiple Headings (H2, H3)
-        - Code Examples (if relevant, using proper markdown blocks)
-        - FAQ Section at the end
-        - Conclusion
-    - Category: Choose from (Coding, AI, Backend, Frontend, Career, Tech)
-    - Tags: 3-5 relevant tags.
+    - Structure: Catchy Title, Excerpt, Detailed Body with H2/H3, Code Blocks, FAQ, and Conclusion.
 
-    IMPORTANT: Return the response strictly in JSON format with the following keys:
+    Return the response strictly in JSON format:
     {
         "title": "...",
         "excerpt": "...",
-        "content": "...", (Markdown content)
-        "category": "...",
-        "tags": ["...", "..."],
-        "metaDescription": "...",
-        "readingTime": "..."
+        "content": "Markdown content here...",
+        "category": "Coding|AI|Backend|Frontend|Tech",
+        "tags": ["tag1", "tag2"],
+        "metaDescription": "150-160 chars SEO description",
+        "readingTime": "X min read"
     }
     `;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    
-    // Clean JSON from markdown blocks if any
-    const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(jsonStr);
+    const chatCompletion = await groq.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "llama-3.3-70b-versatile",
+        response_format: { type: "json_object" }
+    });
+
+    return JSON.parse(chatCompletion.choices[0].message.content);
 }
 
 async function saveToBlog(article) {
-    console.log("Saving article to database...");
+    console.log("Saving article to blog database...");
     
     // Generate unique slug
     article.slug = slugify(article.title, { lower: true, strict: true }) + '-' + Math.random().toString(36).substring(2, 7);
-    article.published = true; // Auto publish for auto blogging
+    article.published = true;
 
     try {
         const res = await axios.post(`${SITE_URL}/api/admin/auto-post`, article, {
@@ -100,14 +89,15 @@ async function saveToBlog(article) {
             }
         });
         console.log("Successfully posted:", res.data.message);
+        console.log("URL:", `${SITE_URL}/blog/${article.slug}`);
     } catch (error) {
         console.error("Error saving post:", error.response?.data || error.message);
     }
 }
 
 async function run() {
-    if (!GEMINI_API_KEY) {
-        console.error("GEMINI_API_KEY is missing!");
+    if (!GROQ_API_KEY) {
+        console.error("GROQ_API_KEY is missing!");
         process.exit(1);
     }
 
@@ -118,7 +108,7 @@ async function run() {
         const article = await generateArticle(topics);
         await saveToBlog(article);
         
-        console.log("Auto blogging task completed!");
+        console.log("Auto blogging task completed successfully!");
     } catch (error) {
         console.error("Automation failed:", error.message);
         process.exit(1);

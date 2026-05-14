@@ -19,11 +19,11 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install axios @google/generative-ai slugify dotenv
+        run: npm install axios groq-sdk slugify dotenv
 
       - name: Run Auto Blogging Script
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
           SITE_URL: "https://blog.gazaalfath.my.id" # Update to your production URL
         run: node scripts/auto-blog.js
