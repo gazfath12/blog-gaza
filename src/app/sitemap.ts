@@ -2,15 +2,21 @@ import { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    select: { slug: true, updatedAt: true },
-  });
+  let blogEntries: any[] = [];
+  
+  try {
+    const posts = await prisma.post.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true },
+    });
 
-  const blogEntries = posts.map((post) => ({
-    url: `https://gazaalfath.my.id/blog/${post.slug}`,
-    lastModified: post.updatedAt,
-  }));
+    blogEntries = posts.map((post) => ({
+      url: `https://gazaalfath.my.id/blog/${post.slug}`,
+      lastModified: post.updatedAt,
+    }));
+  } catch (error) {
+    console.error("Sitemap generation skipped: Database connection failed.");
+  }
 
   return [
     {

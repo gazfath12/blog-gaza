@@ -13,11 +13,17 @@ const categories = [
 ];
 
 export default async function Home() {
-  const latestPosts = await prisma.post.findMany({
-    where: { published: true },
-    orderBy: { createdAt: "desc" },
-    take: 3,
-  });
+  let latestPosts: any[] = [];
+  
+  try {
+    latestPosts = await prisma.post.findMany({
+      where: { published: true },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+    });
+  } catch (error) {
+    console.error("Failed to fetch latest posts for homepage.");
+  }
 
   return (
     <div className="flex flex-col space-y-24 pb-24">
