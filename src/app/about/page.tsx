@@ -6,31 +6,31 @@ export default function AboutPage() {
       <div className="flex flex-col space-y-16">
         <section className="flex flex-col space-y-8">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-6xl">
-            Hi, I'm <span className="text-blue-600">Gaza Alfath</span>.
+            The Digital Garden of <span className="text-blue-600">Gaza Alfath</span>.
           </h1>
           <p className="text-2xl text-muted-foreground leading-relaxed">
-            I'm a Software Engineer and Tech Enthusiast based in Indonesia. I specialize in building full-stack applications with a focus on clean code, performance, and user experience.
+            I'm a Software Engineer who loves to explore the boundaries of AI, Web Performance, and Scalable Architecture. This blog is my space for technical storytelling.
           </p>
         </section>
 
         <div className="grid gap-12 md:grid-cols-2">
           <section className="space-y-6">
             <div className="flex items-center space-x-3 text-primary">
-              <Code size={24} />
-              <h2 className="text-2xl font-bold">What I Do</h2>
+              <Sparkles size={24} />
+              <h2 className="text-2xl font-bold">Why I Write</h2>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Currently, I focus on the JavaScript ecosystem, especially Next.js and Node.js. I'm also deeply interested in AI and how it can be integrated into modern web workflows to create more intuitive experiences.
+              In an industry that moves as fast as tech, writing is how I slow down and truly understand complex concepts. I believe that the best way to master a tool is to teach it to others through clear, insightful articles.
             </p>
           </section>
 
           <section className="space-y-6">
             <div className="flex items-center space-x-3 text-primary">
               <Heart size={24} />
-              <h2 className="text-2xl font-bold">My Passion</h2>
+              <h2 className="text-2xl font-bold">What to Expect</h2>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              I love sharing what I learn through writing. This blog is my digital garden where I document my technical journey, experiments, and career insights to help other developers grow.
+              You'll find deep dives into the JavaScript ecosystem, AI integrations, and architectural patterns. I aim for technical depth while maintaining a narrative that makes complex topics accessible and engaging.
             </p>
           </section>
         </div>
@@ -38,13 +38,9 @@ export default function AboutPage() {
         <section className="rounded-3xl bg-muted p-8 md:p-12">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1 space-y-6">
-              <div className="flex items-center space-x-2 text-primary font-bold uppercase tracking-widest text-xs">
-                <Sparkles size={16} />
-                <span>Let's collaborate</span>
-              </div>
-              <h2 className="text-3xl font-bold">Interested in working together or just want to say hi?</h2>
+              <h2 className="text-3xl font-bold">Join the Conversation</h2>
               <p className="text-lg text-muted-foreground">
-                I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+                Whether you have a question about an article, want to suggest a topic, or just want to chat about the future of tech, I'd love to hear from you.
               </p>
               <a 
                 href="/contact" 

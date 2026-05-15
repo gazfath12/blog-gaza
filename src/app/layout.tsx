@@ -19,20 +19,31 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://blog.gazaalfath.my.id"),
   title: {
-    default: "Gaza Alfath | Software Engineer & Tech Writer",
-    template: "%s | Gaza Alfath",
+    default: "Gaza Alfath Blog | Technical Insights & Engineering",
+    template: "%s | Gaza Alfath Blog",
   },
-  description: "Personal blog of Gaza Alfath, a Software Engineer focusing on AI, Fullstack development, and tech career.",
-  keywords: ["Software Engineer", "Fullstack Developer", "AI", "Next.js", "React", "Tech Blog"],
+  description: "Explore technical deep dives into AI, Fullstack development, and modern web architecture. Original insights for developers and tech enthusiasts.",
+  keywords: ["Technical Blog", "Software Engineering", "AI Insights", "Next.js", "React", "Web Development", "Gaza Alfath"],
   authors: [{ name: "Gaza Alfath" }],
   creator: "Gaza Alfath",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://blog.gazaalfath.my.id",
-    siteName: "Gaza Alfath Blog",
-    title: "Gaza Alfath | Software Engineer",
-    description: "Personal blog of Gaza Alfath.",
+    siteName: "Gaza Alfath Technical Blog",
+    title: "Gaza Alfath Blog | Technical Insights & Engineering",
+    description: "Deep dives into AI, Fullstack development, and modern tech.",
     images: [
       {
         url: "/og-image.png",
@@ -44,8 +55,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gaza Alfath",
-    description: "Software Engineer & Tech Writer",
+    title: "Gaza Alfath Blog",
+    description: "Technical Deep Dives for Modern Developers",
     creator: "@gazfath12",
   },
 };

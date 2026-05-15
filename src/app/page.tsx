@@ -32,22 +32,22 @@ export default async function Home() {
         <div className="flex flex-col items-center space-y-8">
           <div className="inline-flex items-center rounded-full border bg-muted px-3 py-1 text-sm font-medium">
             <span className="relative flex h-2 w-2 mr-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            Available for new opportunities
+            Insights & Engineering
           </div>
           
           <h1 className="max-w-4xl text-5xl font-extrabold tracking-tight sm:text-7xl">
-            Gaza Alfath
+            Technical <span className="text-blue-600">Deep Dives</span> for Modern Developers
           </h1>
           
           <p className="max-w-2xl text-xl font-medium text-muted-foreground sm:text-2xl">
-            Software Engineer • Fullstack Developer • Tech Writer
+            Exploring AI, Fullstack Architecture, and the Future of Web Development.
           </p>
           
           <p className="max-w-2xl text-lg text-muted-foreground">
-            Building robust web applications and sharing insights on AI, modern architecture, and developer career growth.
+            A digital space where I document my technical journey, share original insights from trending tech, and help developers stay ahead of the curve.
           </p>
 
           <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
@@ -55,14 +55,14 @@ export default async function Home() {
               href="/blog"
               className="inline-flex h-12 items-center justify-center rounded-md bg-foreground px-8 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
             >
-              Read Articles
+              Start Reading
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
             <Link
-              href="/contact"
+              href="/about"
               className="inline-flex h-12 items-center justify-center rounded-md border bg-background px-8 text-sm font-medium transition-colors hover:bg-accent"
             >
-              Contact Me
+              Learn More
             </Link>
           </div>
         </div>
